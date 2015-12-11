@@ -13,12 +13,13 @@ cmd> grnline.fs.exe --groonga-path GROONGA_PATH --db-path GROONGA_DB [--encoding
 
 ```cmd
 cmd> grnline.fs.exe --groonga-path "C:\\groonga-5.1.0-x64\\groonga-5.1.0-x64\\bi
-n\\groonga.exe" --db-path "test.db"  --pritty true
+n\\groonga.exe" --db-path "test.db" --encoding UTF-8 --pritty true
 ```
 
 ### Detail
 
 `grnline.fs` create child Groonga process and redirects stdin/stdout to itself.
+
 You can use pritty printing with adding `--pritty true` to command line arguments.
 
 ## Developing

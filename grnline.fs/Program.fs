@@ -37,7 +37,7 @@ let parseArgv argv =
     let args = results.GetAllResults()
     let path = results.GetResult(<@ Groonga_Path @>)
     let db_path = results.GetResult (<@ DB_Path @>)
-    let db_encoding = results.GetResult (<@ Encoding @>, defaultValue = "SHIFT_JIS")
+    let db_encoding = results.GetResult (<@ Encoding @>, defaultValue = "UTF-8")
     let pritty = results.GetResult (<@ Pritty @>, defaultValue = false)
     let config: Config = {Path=path; DBPath=db_path; DBEncoding=db_encoding; Pritty=pritty}
     config
@@ -75,9 +75,14 @@ let start_groonga (config: Config) (line: string) =
     psInfo.RedirectStandardInput <- true
     psInfo.Arguments <- @"" + config.DBPath
     let p = Process.Start(psInfo)
-    let utf8Writer = new StreamWriter(p.StandardInput.BaseStream, Encoding.UTF8)
-    convertLineToUTF8 line |> utf8Writer.Write
-    utf8Writer.Close()
+    if Encoding.GetEncoding(config.DBEncoding) = Encoding.UTF8 then
+        let utf8Writer = new StreamWriter(p.StandardInput.BaseStream, Encoding.UTF8)
+        convertLineToUTF8 line |> utf8Writer.Write
+        utf8Writer.Close()
+    else
+        let writer = new StreamWriter(p.StandardInput.BaseStream)
+        line |> writer.Write
+        writer.Close()
     let stdout = p.StandardOutput.ReadToEnd()
     if config.Pritty then
         convertLineToShiftJIS stdout |> pritty_print |> printfn "-> %s"

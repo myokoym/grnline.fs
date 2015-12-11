@@ -92,20 +92,23 @@ let start_groonga (config: Config) (line: string) =
 
 [<EntryPoint>]
 let main argv =
-    let config: Config = parseArgv argv
-    if not <| check_groonga(config) then
-        "Groonga does not exists specified path: " + config.Path |> printfn "%s"
-        exit 1
+    try 
+        let config: Config = parseArgv argv
+        if not <| check_groonga(config) then
+            "Groonga does not exists specified path: " + config.Path |> printfn "%s"
+            exit 1
 
-    let mutable continueLooping = true
-    while continueLooping do
-        Path.GetFileNameWithoutExtension config.DBPath |> printf "grnline.fs(%s)> "
-        let tr = System.Console.In
+        let mutable continueLooping = true
+        while continueLooping do
+            Path.GetFileNameWithoutExtension config.DBPath |> printf "grnline.fs(%s)> "
+            let tr = System.Console.In
 
-        let line = tr.ReadLine()
-        if line.Equals("quit") then
-            exit 0
-        start_groonga config line
+            let line = tr.ReadLine()
+            if line.Equals("quit") then
+                exit 0
+            start_groonga config line
 
-    printfn "%A" config
+    with
+       | :? System.ArgumentException -> usage |> printfn "Invalid argument(s) specified. See usage: %s"
+
     0 // return an integer exit code

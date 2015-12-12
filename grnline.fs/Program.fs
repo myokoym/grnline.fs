@@ -62,7 +62,6 @@ let pritty_print (json: string) =
 let check_groonga (config: Config) =
     System.IO.File.Exists <| config.Path
 
-
 let start_groonga (config: Config) (line: string) =
     let psInfo = new System.Diagnostics.ProcessStartInfo(config.Path)
     psInfo.UseShellExecute <- false

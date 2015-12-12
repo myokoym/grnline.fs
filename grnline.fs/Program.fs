@@ -60,10 +60,8 @@ let pritty_print (json: string) =
     JsonConvert.SerializeObject(parsedJson, Formatting.Indented)
 
 let check_groonga (config: Config) =
-    if System.IO.File.Exists(config.Path) then
-        true
-    else
-        false
+    System.IO.File.Exists <| config.Path
+
 
 let start_groonga (config: Config) (line: string) =
     let psInfo = new System.Diagnostics.ProcessStartInfo(config.Path)

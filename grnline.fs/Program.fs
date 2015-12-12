@@ -1,10 +1,10 @@
 ﻿// Learn more about F# at http://fsharp.net
 // See the 'F# Tutorial' project for more help.
 open Nessos.Argu
+open Newtonsoft.Json
 open System.IO
 open System.Diagnostics
 open System.Text
-open Newtonsoft.Json
 
 type CLIArguments =
     | Groonga_Path of string
@@ -34,7 +34,6 @@ type Config =
 
 let parseArgv argv =
     let results = parser.Parse(argv)
-    let args = results.GetAllResults()
     let path = results.GetResult(<@ Groonga_Path @>)
     let db_path = results.GetResult (<@ DB_Path @>)
     let db_encoding = results.GetResult (<@ Encoding @>, defaultValue = "UTF-8")
@@ -106,6 +105,7 @@ let main argv =
 
             let line = tr.ReadLine()
             if line.Equals("quit") then
+                printf "Bye!"
                 exit 0
             start_groonga config line
 

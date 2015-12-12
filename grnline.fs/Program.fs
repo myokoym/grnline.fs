@@ -86,9 +86,10 @@ let main argv =
             "Groonga does not exists specified path: " + config.Path |> printfn "%s"
             exit 1
 
+        let prompt = Path.GetFileNameWithoutExtension config.DBPath |> sprintf "grnline.fs(%s)> "
         let mutable continueLooping = true
         while continueLooping do
-            Path.GetFileNameWithoutExtension config.DBPath |> printf "grnline.fs(%s)> "
+            prompt |> printf "grnline.fs(%s)> "
             let tr = System.Console.In
 
             let line = tr.ReadLine()

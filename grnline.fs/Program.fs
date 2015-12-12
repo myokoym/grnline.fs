@@ -44,7 +44,7 @@ let convertLineToUTF8 (line: string) =
     let shiftJIS = Encoding.GetEncoding("shift_jis")
     let utf8 = Encoding.UTF8;
     let convertedBytes = Encoding.Convert(shiftJIS, utf8, shiftJIS.GetBytes(line.ToCharArray()))
-    let unicodeStr = utf8.GetString(convertedBytes);
+    let unicodeStr = utf8.GetString(convertedBytes)
     unicodeStr
 
 let convertLineToShiftJIS (line: string) =
@@ -52,7 +52,7 @@ let convertLineToShiftJIS (line: string) =
     let shiftJIS = Encoding.GetEncoding("shift_jis")
     let utf8 = Encoding.UTF8;
     let shiftJISBytes = Encoding.Convert(utf8, shiftJIS, utf8.GetBytes(line.ToCharArray()))
-    let shiftJISStr = Encoding.UTF8.GetString(shiftJISBytes);
+    let shiftJISStr = Encoding.UTF8.GetString(shiftJISBytes)
     shiftJISStr
 
 let pritty_print (json: string) =

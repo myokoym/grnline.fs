@@ -75,7 +75,8 @@ let start_groonga (config: Config) (line: string) =
     psInfo.RedirectStandardInput <- true
     psInfo.Arguments <- @"" + config.DBPath
     let p = Process.Start(psInfo)
-    if Encoding.GetEncoding(config.DBEncoding) = Encoding.UTF8 then
+    let encoding = config.DBEncoding |> Encoding.GetEncoding
+    if encoding = Encoding.UTF8 then
         let utf8Writer = new StreamWriter(p.StandardInput.BaseStream, Encoding.UTF8)
         convertLineToUTF8 line |> utf8Writer.Write
         utf8Writer.Close()

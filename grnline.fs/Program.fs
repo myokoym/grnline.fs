@@ -43,17 +43,9 @@ let convertLineToUTF8 (line: string) =
     // Create two different encodings.
     let shiftJIS = Encoding.GetEncoding("shift_jis")
     let utf8 = Encoding.UTF8;
-    let convertedBytes = Encoding.Convert(shiftJIS, utf8, shiftJIS.GetBytes(line.ToCharArray()))
-    let unicodeStr = utf8.GetString(convertedBytes)
-    unicodeStr
-
-let convertLineToShiftJIS (line: string) =
-    // Create two different encodings.
-    let shiftJIS = Encoding.GetEncoding("shift_jis")
-    let utf8 = Encoding.UTF8;
-    let shiftJISBytes = Encoding.Convert(utf8, shiftJIS, utf8.GetBytes(line.ToCharArray()))
-    let shiftJISStr = Encoding.UTF8.GetString(shiftJISBytes)
-    shiftJISStr
+    let utf8Bytes = Encoding.Convert(shiftJIS, utf8, shiftJIS.GetBytes(line.ToCharArray()))
+    let utf8Str = utf8.GetString(utf8Bytes)
+    utf8Str
 
 let pritty_print (json: string) =
     let parsedJson = JsonConvert.DeserializeObject(json)
@@ -67,6 +59,7 @@ let start_groonga (config: Config) (line: string) =
     psInfo.UseShellExecute <- false
     psInfo.RedirectStandardOutput <- true
     psInfo.RedirectStandardInput <- true
+    psInfo.StandardOutputEncoding <- Encoding.UTF8
     psInfo.Arguments <- @"" + config.DBPath
     let p = Process.Start(psInfo)
     let encoding = config.DBEncoding |> Encoding.GetEncoding
@@ -80,9 +73,9 @@ let start_groonga (config: Config) (line: string) =
         writer.Close()
     let stdout = p.StandardOutput.ReadToEnd()
     if config.Pritty then
-        convertLineToShiftJIS stdout |> pritty_print |> printfn "-> %s"
+        stdout |> pritty_print |> printfn "-> %s"
     else
-        convertLineToShiftJIS stdout |> printfn "-> %s"
+        stdout |> printfn "-> %s"
     p.Close()
 
 [<EntryPoint>]

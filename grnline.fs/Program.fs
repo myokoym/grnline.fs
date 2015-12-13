@@ -54,6 +54,9 @@ let pritty_print (json: string) =
 let check_groonga (config: Config) =
     System.IO.File.Exists <| config.Path
 
+let check_dbpath (config: Config) =
+    System.IO.File.Exists <| config.DBPath
+
 let start_groonga (config: Config) (line: string) =
     let encoding = config.DBEncoding |> Encoding.GetEncoding
     let psInfo = new System.Diagnostics.ProcessStartInfo(config.Path)
@@ -85,6 +88,10 @@ let main argv =
         let config: Config = parseArgv argv
         if not <| check_groonga(config) then
             "Groonga does not exists specified path: " + config.Path |> printfn "%s"
+            exit 1
+
+        if not <| check_dbpath(config) then
+            "Groonga database does not exists specified path: " + config.DBPath |> printfn "%s"
             exit 1
 
         let prompt = Path.GetFileNameWithoutExtension config.DBPath |> sprintf "grnline.fs(%s)> "

@@ -12,8 +12,7 @@ cmd> grnline.fs.exe --groonga-path GROONGA_PATH --db-path GROONGA_DB [--encoding
 ### Example
 
 ```cmd
-cmd> grnline.fs.exe --groonga-path "C:\\groonga-5.1.0-x64\\groonga-5.1.0-x64\\bi
-n\\groonga.exe" --db-path "test.db" --encoding UTF-8 --pritty true
+cmd> grnline.fs.exe --groonga-path "C:\\groonga-5.1.0-x64\\groonga-5.1.0-x64\\bin\\groonga.exe" --db-path "test.db" --encoding UTF-8 --pritty true
 ```
 
 ### Detail

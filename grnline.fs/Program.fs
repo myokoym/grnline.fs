@@ -55,14 +55,15 @@ let check_groonga (config: Config) =
     System.IO.File.Exists <| config.Path
 
 let start_groonga (config: Config) (line: string) =
+    let encoding = config.DBEncoding |> Encoding.GetEncoding
     let psInfo = new System.Diagnostics.ProcessStartInfo(config.Path)
     psInfo.UseShellExecute <- false
     psInfo.RedirectStandardOutput <- true
     psInfo.RedirectStandardInput <- true
-    psInfo.StandardOutputEncoding <- Encoding.UTF8
     psInfo.Arguments <- @"" + config.DBPath
+    if encoding.Equals <| Encoding.UTF8 then
+        psInfo.StandardOutputEncoding <- Encoding.UTF8
     let p = Process.Start(psInfo)
-    let encoding = config.DBEncoding |> Encoding.GetEncoding
     if encoding.Equals <| Encoding.UTF8 then
         let utf8Writer = new StreamWriter(p.StandardInput.BaseStream, Encoding.UTF8)
         convertLineToUTF8 line |> utf8Writer.Write

@@ -1,6 +1,8 @@
 grnline.fs
 ===
 
+[![Build status](https://ci.appveyor.com/api/projects/status/80nv02co2akud13t/branch/master?svg=true)](https://ci.appveyor.com/project/cosmo0920/grnline-fs/branch/master)
+
 A command line tool for Gronga on .NET 4.5.
 
 ## Try it

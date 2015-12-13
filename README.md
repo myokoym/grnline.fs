@@ -3,6 +3,14 @@ grnline.fs
 
 A command line tool for Gronga on .NET 4.5.
 
+## Try it
+
+* You have to install .NET 4.5. (Not client profile)
+
+* Unpack grnline.fs-VERSION.zip
+
+* Execute grnline.fs.exe via cmd.exe or powershell.exe
+
 ## Usage
 
 ```cmd

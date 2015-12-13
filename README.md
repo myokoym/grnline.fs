@@ -31,6 +31,10 @@ cmd> grnline.fs.exe --groonga-path "C:\\groonga-5.1.0-x64\\groonga-5.1.0-x64\\bi
 
 You can use pritty printing with adding `--pritty true` to command line arguments.
 
+#### Note
+
+If you enconter space contained path, you can get MS-DOS 8.3 style path with `dir /x` and use it such as `--db-path` arguments.
+
 ## Developing
 
 * Install Visual Studio 2013 or higher. (Including Express Edition)

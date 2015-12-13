@@ -90,7 +90,7 @@ let main argv =
         let prompt = Path.GetFileNameWithoutExtension config.DBPath |> sprintf "grnline.fs(%s)> "
         let mutable continueLooping = true
         while continueLooping do
-            prompt |> printf "grnline.fs(%s)> "
+            prompt |> printf "%s"
             let tr = System.Console.In
 
             let line = tr.ReadLine()

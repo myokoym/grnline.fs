@@ -87,11 +87,11 @@ let main argv =
     try 
         let config: Config = parseArgv argv
         if not <| check_groonga(config) then
-            "Groonga does not exists specified path: " + config.Path |> printfn "%s"
+            "Groonga does not exist specified path: " + config.Path |> printfn "%s"
             exit 1
 
         if not <| check_dbpath(config) then
-            "Groonga database does not exists specified path: " + config.DBPath |> printfn "%s"
+            "Groonga database does not exist specified path: " + config.DBPath |> printfn "%s"
             exit 1
 
         let prompt = Path.GetFileNameWithoutExtension config.DBPath |> sprintf "grnline.fs(%s)> "

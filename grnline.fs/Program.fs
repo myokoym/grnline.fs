@@ -57,7 +57,7 @@ let check_groonga (config: Config) =
 let check_dbpath (config: Config) =
     System.IO.File.Exists <| config.DBPath
 
-let start_groonga (config: Config) (line: string) =
+let start_groonga (config: Config) (inputs: string list) =
     let encoding = config.DBEncoding |> Encoding.GetEncoding
     let psInfo = new System.Diagnostics.ProcessStartInfo(config.Path)
     psInfo.UseShellExecute <- false
@@ -69,11 +69,11 @@ let start_groonga (config: Config) (line: string) =
     let p = Process.Start(psInfo)
     if encoding.Equals <| Encoding.UTF8 then
         let utf8Writer = new StreamWriter(p.StandardInput.BaseStream, Encoding.UTF8)
-        convertLineToUTF8 line |> utf8Writer.Write
+        inputs |> List.map (fun s -> convertLineToUTF8 s |> utf8Writer.Write) |> ignore
         utf8Writer.Close()
     else
         let writer = new StreamWriter(p.StandardInput.BaseStream)
-        line |> writer.Write
+        inputs |> List.map (fun s -> writer.Write s) |> ignore
         writer.Close()
     let stdout = p.StandardOutput.ReadToEnd()
     if config.Pritty then
@@ -81,6 +81,7 @@ let start_groonga (config: Config) (line: string) =
     else
         stdout |> printfn "-> %s"
     p.Close()
+    stdout
 
 [<EntryPoint>]
 let main argv =
@@ -95,16 +96,23 @@ let main argv =
             exit 1
 
         let prompt = Path.GetFileNameWithoutExtension config.DBPath |> sprintf "grnline.fs(%s)> "
+        let mutable inputs: string list = []
         let mutable continueLooping = true
         while continueLooping do
             prompt |> printf "%s"
             let tr = System.Console.In
 
             let line = tr.ReadLine()
+            inputs <- List.append inputs [line]
             if line.Equals <| "quit" then
                 printf "Bye!"
                 exit 0
-            start_groonga config line
+
+            let result = start_groonga config inputs
+            if result.Equals <| "" then
+                inputs <- List.append inputs ["\n"]
+            if not <| result.Equals("") then
+                inputs <- []
 
     with
        | :? System.ArgumentException -> usage |> printfn "Invalid argument(s) specified. See usage: %s"

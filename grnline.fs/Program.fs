@@ -8,7 +8,7 @@ type CLIArguments =
     | Groonga_Path of string
     | DB_Path of string
     | Encoding of string
-    | Pritty of bool
+    | Pretty of bool
 with
     interface IArgParserTemplate with
         member s.Usage =
@@ -16,7 +16,7 @@ with
             | Groonga_Path _ -> "specify groonga.exe path."
             | DB_Path _ -> "specify Groonga database path."
             | Encoding _ -> "Specify encoding such as UTF-8."
-            | Pritty _ -> "Output pritty printed."
+            | Pretty _ -> "Output pritty printed."
 
 // build the argument parser
 let parser = ArgumentParser.Create<CLIArguments>()
@@ -28,15 +28,15 @@ type Config =
     {Path:string;
      DBPath:string;
      DBEncoding:string;
-     Pritty:bool}
+     Pretty:bool}
 
 let parseArgv argv =
     let results = parser.Parse(argv)
     let path = results.GetResult(<@ Groonga_Path @>)
     let db_path = results.GetResult (<@ DB_Path @>)
     let db_encoding = results.GetResult (<@ Encoding @>, defaultValue = "UTF-8")
-    let pritty = results.GetResult (<@ Pritty @>, defaultValue = false)
-    let config: Config = {Path=path; DBPath=db_path; DBEncoding=db_encoding; Pritty=pritty}
+    let pretty = results.GetResult (<@ Pretty @>, defaultValue = false)
+    let config: Config = {Path=path; DBPath=db_path; DBEncoding=db_encoding; Pretty=pretty}
     config
 
 let convertLineToUTF8 (line: string) =
@@ -47,7 +47,7 @@ let convertLineToUTF8 (line: string) =
     let utf8Str = utf8.GetString(utf8Bytes)
     utf8Str
 
-let pritty_print (json: string) =
+let pretty_print (json: string) =
     let parsedJson = JsonConvert.DeserializeObject(json)
     JsonConvert.SerializeObject(parsedJson, Formatting.Indented)
 
@@ -76,8 +76,8 @@ let start_groonga (config: Config) (inputs: string list) =
         inputs |> List.map (fun s -> writer.Write s) |> ignore
         writer.Close()
     let stdout = p.StandardOutput.ReadToEnd()
-    if config.Pritty then
-        stdout |> pritty_print |> printfn "-> %s"
+    if config.Pretty then
+        stdout |> pretty_print |> printfn "-> %s"
     else
         stdout |> printfn "-> %s"
     p.Close()

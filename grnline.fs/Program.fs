@@ -64,10 +64,10 @@ let start_groonga (config: Config) (inputs: string list) =
     psInfo.RedirectStandardOutput <- true
     psInfo.RedirectStandardInput <- true
     psInfo.Arguments <- @"" + config.DBPath
-    if encoding.Equals <| Encoding.UTF8 then
+    if encoding = Encoding.UTF8 then
         psInfo.StandardOutputEncoding <- Encoding.UTF8
     let p = Process.Start(psInfo)
-    if encoding.Equals <| Encoding.UTF8 then
+    if encoding = Encoding.UTF8 then
         let utf8Writer = new StreamWriter(p.StandardInput.BaseStream, Encoding.UTF8)
         inputs |> List.map (fun s -> convertLineToUTF8 s |> utf8Writer.Write) |> ignore
         utf8Writer.Close()
@@ -104,14 +104,14 @@ let main argv =
 
             let line = tr.ReadLine()
             inputs <- List.append inputs [line]
-            if line.Equals <| "quit" then
+            if line = "quit" then
                 printf "Bye!"
                 exit 0
 
             let result = start_groonga config inputs
-            if result.Equals <| "" then
+            if result = "" then
                 inputs <- List.append inputs ["\n"]
-            if not <| result.Equals("") then
+            if not <| (result = "") then
                 inputs <- []
 
     with

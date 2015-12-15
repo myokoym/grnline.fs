@@ -59,7 +59,7 @@ let check_dbpath (config: Config) =
 
 let start_groonga (config: Config) (inputs: string list) =
     let encoding = config.DBEncoding |> Encoding.GetEncoding
-    let psInfo = new System.Diagnostics.ProcessStartInfo(config.Path)
+    let psInfo = new ProcessStartInfo(config.Path)
     psInfo.UseShellExecute <- false
     psInfo.RedirectStandardOutput <- true
     psInfo.RedirectStandardInput <- true

@@ -117,7 +117,7 @@ let main argv =
             if result = "" then
                 inputs <- List.append inputs ["\n"]
                 prompt <- ">> "
-            if not <| (result = "") then
+            elif not <| (result = "") then
                 inputs <- []
                 prompt <- prompt_default
 

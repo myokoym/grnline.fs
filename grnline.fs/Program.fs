@@ -76,10 +76,14 @@ let start_groonga (config: Config) (inputs: string list) =
         inputs |> List.map (fun s -> writer.Write s) |> ignore
         writer.Close()
     let stdout = p.StandardOutput.ReadToEnd()
+    let prompt = if stdout = "" then
+                    ""
+                 else
+                    "-> " + stdout
     if config.Pretty then
-        stdout |> pretty_print |> printfn "-> %s"
+        prompt |> pretty_print |> printf "%s"
     else
-        stdout |> printfn "-> %s"
+        prompt |> printf "%s"
     p.Close()
     stdout
 
@@ -95,7 +99,8 @@ let main argv =
             "Groonga database does not exist specified path: " + config.DBPath |> printfn "%s"
             exit 1
 
-        let prompt = Path.GetFileNameWithoutExtension config.DBPath |> sprintf "grnline.fs(%s)> "
+        let prompt_default = Path.GetFileNameWithoutExtension config.DBPath |> sprintf "grnline.fs(%s)> "
+        let mutable prompt = prompt_default
         let mutable inputs: string list = []
         let mutable continueLooping = true
         while continueLooping do
@@ -111,8 +116,10 @@ let main argv =
             let result = start_groonga config inputs
             if result = "" then
                 inputs <- List.append inputs ["\n"]
+                prompt <- ">> "
             if not <| (result = "") then
                 inputs <- []
+                prompt <- prompt_default
 
     with
        | :? System.ArgumentException -> usage |> printfn "Invalid argument(s) specified. See usage: %s"

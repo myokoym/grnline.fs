@@ -16,7 +16,7 @@ A command line tool for Gronga on .NET 4.5.
 ## Usage
 
 ```cmd
-cmd> grnline.fs.exe --groonga-path GROONGA_PATH --db-path GROONGA_DB [--encoding ENCODING] [--pritty true]
+cmd> grnline.fs.exe --groonga-path GROONGA_PATH --db-path GROONGA_DB [--encoding ENCODING] [--pretty true]
 ```
 
 ### Example

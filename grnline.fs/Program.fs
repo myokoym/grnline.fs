@@ -79,7 +79,7 @@ let start_groonga (config: Config) (inputs: string list) =
     let prompt = if stdout = "" then
                     ""
                  else
-                    "-> " + stdout
+                    stdout
     if config.Pretty then
         prompt |> pretty_print |> printf "%s"
     else

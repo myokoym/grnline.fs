@@ -58,6 +58,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
     <Compile Include="Type.fs" />
+    <Compile Include="Culture.fs" />
     <Compile Include="CommandLineParser.fs" />
     <Compile Include="Process.fs" />
     <Compile Include="Program.fs" />

@@ -15,7 +15,7 @@ let validate_environment config =
 
 [<EntryPoint>]
 let main argv =
-    try 
+    try
         let config: Config = parseArgv argv
         validate_environment config
 

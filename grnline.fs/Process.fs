@@ -16,8 +16,11 @@ let convertLineToUTF8 (line: string) =
     utf8Str
 
 let pretty_print (json: string) =
-    let parsedJson = JsonConvert.DeserializeObject(json)
-    JsonConvert.SerializeObject(parsedJson, Formatting.Indented)
+    try
+        let parsedJson = JsonConvert.DeserializeObject(json)
+        JsonConvert.SerializeObject(parsedJson, Formatting.Indented)
+    with
+        | :? JsonReaderException -> sprintf "%s" json // When error occurred, printing json string as-is.
 
 let check_groonga (config: Config) =
     System.IO.File.Exists <| config.Path

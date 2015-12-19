@@ -8,5 +8,5 @@ extern int GetSystemDefaultLCID()
 
 let get_codepage = 
     let lcid = GetSystemDefaultLCID()
-    let ci = System.Globalization.CultureInfo(lcid)
+    let ci = CultureInfo(lcid)
     ci.TextInfo.OEMCodePage

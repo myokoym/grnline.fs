@@ -26,7 +26,7 @@ let main argv =
 
             let line = tr.ReadLine()
             inputs <- List.append inputs [line]
-            if line = "quit" then
+            if line = "quit" || line = "shutdown" then
                 printf "Bye!"
                 exit 0
 

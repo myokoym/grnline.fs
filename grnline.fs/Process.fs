@@ -20,7 +20,7 @@ let convertLineToUTF8 (line: string) =
 let pretty_print (json: string) =
     try
         let parsedJson = JsonConvert.DeserializeObject(json)
-        JsonConvert.SerializeObject(parsedJson, Formatting.Indented)
+        JsonConvert.SerializeObject(parsedJson, Formatting.Indented) |> sprintf "%s\n"
     with
         | :? JsonReaderException -> sprintf "%s" json // When error occurred, printing json string as-is.
 

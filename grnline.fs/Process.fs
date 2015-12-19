@@ -11,9 +11,9 @@ open Culture
 let convertLineToUTF8 (line: string) =
     // Create two different encodings.
     let codepage = get_codepage
-    let shiftJIS = Encoding.GetEncoding(codepage)
+    let systemCodePage = Encoding.GetEncoding(codepage)
     let utf8 = Encoding.UTF8;
-    let utf8Bytes = Encoding.Convert(shiftJIS, utf8, shiftJIS.GetBytes(line.ToCharArray()))
+    let utf8Bytes = Encoding.Convert(systemCodePage, utf8, systemCodePage.GetBytes(line.ToCharArray()))
     let utf8Str = utf8.GetString(utf8Bytes)
     utf8Str
 

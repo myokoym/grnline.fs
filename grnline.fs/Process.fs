@@ -12,10 +12,13 @@ let convertLineToUTF8 (line: string) =
     // Create two different encodings.
     let codepage = get_codepage
     let systemCodePage = Encoding.GetEncoding(codepage)
-    let utf8 = Encoding.UTF8;
-    let utf8Bytes = Encoding.Convert(systemCodePage, utf8, systemCodePage.GetBytes(line.ToCharArray()))
-    let utf8Str = utf8.GetString(utf8Bytes)
-    utf8Str
+    if systemCodePage = Encoding.UTF8 then
+        line
+    else
+        let utf8 = Encoding.UTF8;
+        let utf8Bytes = Encoding.Convert(systemCodePage, utf8, systemCodePage.GetBytes(line.ToCharArray()))
+        let utf8Str = utf8.GetString(utf8Bytes)
+        utf8Str
 
 let pretty_print (json: string) =
     try

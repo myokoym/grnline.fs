@@ -3,4 +3,5 @@ version: 0.0.4.{build}
 before_build:
   - nuget restore
 
-test: off
+test_script:
+  - ps: .\RunTests.ps1

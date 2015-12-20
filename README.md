@@ -37,8 +37,17 @@ If you enconter space contained path, you can get MS-DOS 8.3 style path with `di
 
 ## Developing
 
+### For Windows
+
 * Install Visual Studio 2013 or higher. (Including Express Edition)
 * Use nuget to restore dependent libraries.
+  * Argu (for command line arguments parser)
+  * Json.NET (for pretty printing JSON)
+
+### For OS X (experimental)
+
+* Install Xamarin Studio 5.10.2 or later
+* Restore dependent libraries.
   * Argu (for command line arguments parser)
   * Json.NET (for pretty printing JSON)
 

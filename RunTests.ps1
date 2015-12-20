@@ -6,4 +6,4 @@ $inputs = @(
   ".\grnline.fs.Persimmon.Tests\bin\Debug\grnline.fs.Persimmon.Tests.dll"
 )
 
-.\packages\Persimmon.Console\tools\Persimmon.Console.exe $inputs
+.\packages\Persimmon.Console.1.0.1\tools\Persimmon.Console.exe $inputs

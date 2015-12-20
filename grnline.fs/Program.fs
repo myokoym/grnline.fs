@@ -42,6 +42,6 @@ let main argv =
                 prompt <- prompt_default
 
     with
-       | :? System.ArgumentException -> usage |> printfn "Invalid argument(s) specified. See usage: %s"
+       | :? System.ArgumentException -> usage |> printfn "usage: %s"
 
     0 // return an integer exit code

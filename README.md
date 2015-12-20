@@ -44,7 +44,7 @@ If you enconter space contained path, you can get MS-DOS 8.3 style path with `di
   * Argu (for command line arguments parser)
   * Json.NET (for pretty printing JSON)
 
-### For OS X (experimental)
+### For OS X (For building grnline.fs only)
 
 * Install Xamarin Studio 5.10.2 or later
 * Restore dependent libraries.

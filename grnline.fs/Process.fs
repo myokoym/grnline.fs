@@ -11,12 +11,12 @@ open Culture
 let convertLineToUTF8 (line: string) =
     // Create two different encodings.
     let codepage = get_codepage
-    let systemCodePage = Encoding.GetEncoding(codepage)
-    if systemCodePage = Encoding.UTF8 then
+    let systemEncoding = Encoding.GetEncoding(codepage)
+    if systemEncoding = Encoding.UTF8 then
         line
     else
         let utf8 = Encoding.UTF8;
-        let utf8Bytes = Encoding.Convert(systemCodePage, utf8, systemCodePage.GetBytes(line.ToCharArray()))
+        let utf8Bytes = Encoding.Convert(systemEncoding, utf8, systemEncoding.GetBytes(line.ToCharArray()))
         let utf8Str = utf8.GetString(utf8Bytes)
         utf8Str
 

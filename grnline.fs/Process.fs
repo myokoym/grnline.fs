@@ -9,7 +9,6 @@ open Type
 open Culture
 
 let convertLineToUTF8 (line: string) =
-    // Create two different encodings.
     let codepage = get_codepage
     let systemEncoding = Encoding.GetEncoding(codepage)
     if systemEncoding = Encoding.UTF8 then
